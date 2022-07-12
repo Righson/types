@@ -11,7 +11,7 @@ class Maybe {
 
     public function bind(callable $fn): Maybe {
         if (empty($this->value)) {
-            return Maybe(null);
+            return new Maybe(null);
         }
 
         $res = $fn($this->value);
