@@ -1,0 +1,21 @@
+{
+    "name": "righson/types",
+    "description": "Simple types library for PHP",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Righson\\Types\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mihailenko D",
+            "email": "free.fhh@gmail.com"
+        }
+    ],
+    "require": {}
+}
