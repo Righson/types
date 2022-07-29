@@ -17,5 +17,7 @@
             "email": "free.fhh@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-mbstring": "*"
+    }
 }

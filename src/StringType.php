@@ -2,6 +2,9 @@
 
 namespace Righson\Types;
 
+use JetBrains\PhpStorm\Pure;
+use ReturnTypeWillChange;
+
 class StringType implements \ArrayAccess {
     private string $content;
 
@@ -12,12 +15,13 @@ class StringType implements \ArrayAccess {
     public function offsetExists($offset): bool
     {
         if (is_string($offset)) {
-            return strstr($this->content, $offset) !== false;
+            return str_contains($this->content, $offset);
         }
         $offsetInt = (int)$offset;
         return mb_strlen($this->content) > $offsetInt;
     }
 
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (is_array($offset) && count($offset) == 2) {
@@ -33,6 +37,7 @@ class StringType implements \ArrayAccess {
         }
     }
 
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $offsetInt = (int)$offset;
@@ -54,6 +59,7 @@ class StringType implements \ArrayAccess {
         }
     }
 
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         if (is_integer($offset)) {
@@ -67,18 +73,19 @@ class StringType implements \ArrayAccess {
         }
     }
 
-    public function toString()
+    public function toString(): string
     {
         return $this->content;
     }
 
-    public function iter($by = 1)
+    public function iter($by = 1): \Generator
     {
         foreach (str_split($this->content, $by) as $char) {
             yield $char;
         }
     }
 
+    #[Pure]
     public function __toString()
     {
         return $this->toString();
@@ -135,26 +142,9 @@ class StringType implements \ArrayAccess {
         return substr_count($this->content, $string);
     }
 
-    /**
-     * @param string $delimiter
-     * @param int $take
-     * @return array
-     * @throws IncorrectValue
-     *
-     */
-    public function split(string $delimiter, int $take = 0)
+    public function split(string $delimiter)
     {
-        $t = explode($delimiter, $this->content);
-
-        if (abs($take) > count($t)) throw new IncorrectValue("Out of range");
-
-        if ($take < 0) {
-            return $t[count($t) + $take];
-        } elseif ($take > 0) {
-            return $t[$take];
-        } else {
-            return $t;
-        }
+        return explode($delimiter, $this->content);
     }
 
     public function join($joinStr)
@@ -168,11 +158,6 @@ class StringType implements \ArrayAccess {
         }
     }
 
-    /**
-     * @param callable $fn
-     * @return StringType
-     * @throws IncorrectValue
-     */
     public function apply(callable $fn): StringType
     {
         $cont = $this->content;
