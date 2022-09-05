@@ -279,7 +279,7 @@ class ArrayType implements \ArrayAccess
         while ($n > 0) {
             if (isset($this->container[$this->pos])) {
                 $item = $this->container[$this->pos];
-                if (!empty($item)) break;
+                if (empty($item)) break;
 
                 $ret[] = $item;
             }
