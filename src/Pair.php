@@ -24,6 +24,16 @@ class Pair
         return [$this->left, $this->right];
     }
 
+    public function left(): mixed
+    {
+        return $this->left;
+    }
+
+    public function right(): mixed
+    {
+        return $this->right;
+    }
+
     public function ifFirst(callable $fn, callable $then = null)
     {
         if($this->left) {
